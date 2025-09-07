@@ -35,7 +35,7 @@ searchForm.addEventListener('submit', async (e) => {
   weatherContainer.innerHTML = '';
   if (map) map.remove();
   try {
-    const response = await fetch('http://localhost:5000/api/places', {
+    const response = await fetch('https://itinerary-planner-9t1q.onrender.com/api/places', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ city }),
     });
@@ -143,7 +143,7 @@ async function saveItinerary() {
         alert('Please search for a city and add items to your itinerary before saving.'); return;
     }
     try {
-        const response = await fetch('http://localhost:5000/api/itineraries', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-auth-token': token }, body: JSON.stringify({ cityName: currentCity.name, city_coords: currentCity.coords, places: itinerary.places, restaurants: itinerary.restaurants }) });
+        const response = await fetch('https://itinerary-planner-9t1q.onrender.com/api/itineraries', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-auth-token': token }, body: JSON.stringify({ cityName: currentCity.name, city_coords: currentCity.coords, places: itinerary.places, restaurants: itinerary.restaurants }) });
         if (!response.ok) throw new Error('Failed to save itinerary');
         alert('Itinerary saved successfully!');
     } catch (err) {
@@ -156,7 +156,7 @@ async function showMyItineraries() {
     myItinerariesList.innerHTML = '<p>Loading...</p>';
     myItinerariesModal.style.display = 'block';
     try {
-        const response = await fetch('http://localhost:5000/api/itineraries', { headers: { 'x-auth-token': token } });
+        const response = await fetch('https://itinerary-planner-9t1q.onrender.com/api/itineraries', { headers: { 'x-auth-token': token } });
         if (!response.ok) throw new Error('Could not fetch itineraries');
         savedItineraries = await response.json();
         if (savedItineraries.length === 0) {
@@ -188,7 +188,7 @@ async function showNearbyRestaurants(lon, lat) {
     nearbyModalBody.innerHTML = '<p>Searching...</p>';
     nearbyModal.style.display = 'block';
     try {
-        const response = await fetch('http://localhost:5000/api/places/nearby-restaurants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lon, lat }) });
+        const response = await fetch('https://itinerary-planner-9t1q.onrender.com/api/places/nearby-restaurants', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lon, lat }) });
         if (!response.ok) throw new Error('Failed to fetch nearby restaurants');
         const nearby = await response.json();
         if (nearby.length === 0) {
@@ -224,7 +224,7 @@ async function handleAuthSubmit(e) {
     e.preventDefault();
     const form = e.target; const type = form.id.replace('-form', ''); const errorEl = document.getElementById('auth-error'); const data = Object.fromEntries(new FormData(form).entries());
     try {
-        const response = await fetch(`http://localhost:5000/api/users/${type}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const response = await fetch(`https://itinerary-planner-9t1q.onrender.com/api/users/${type}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
         const result = await response.json();
         if (!response.ok) throw new Error(result.msg || 'An error occurred');
         localStorage.setItem('token', result.token);
