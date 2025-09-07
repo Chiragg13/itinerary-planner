@@ -1,0 +1,235 @@
+/* File: frontend/style.css */
+
+/* --- CSS Variables for easy theme management --- */
+:root {
+    --bg-color-start: #02010a;
+    --bg-color-end: #1b143d;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --text-color: #f0f4f8;
+    --text-secondary: #a8b2c1;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --accent-color-1: #00ffff; /* Cyan */
+    --accent-color-2: #ff00ff; /* Magenta */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+}
+
+/* --- Global Styles & Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
+    color: var(--text-color);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- Animated Background --- */
+.background-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+.shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.shapes li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: var(--glass-bg);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    border: 1px solid var(--border-color);
+}
+.shapes li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.shapes li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.shapes li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+.shapes li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.shapes li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+.shapes li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+.shapes li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+
+@keyframes animate {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+}
+
+/* --- Main Layout & Glassmorphism Containers --- */
+.main-container {
+    width: 95%;
+    max-width: 1400px;
+    height: 95vh;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+}
+
+#content-container {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    height: auto;
+    min-height: 0;
+}
+
+/* --- Header & Form Elements --- */
+.main-header {
+    position: relative;
+    padding-bottom: 10px;
+}
+.main-header h1 {
+    text-align: center;
+    font-size: 2.2rem; /* Reduced size */
+    text-shadow: 0 0 10px var(--accent-color-1);
+    margin: 0;
+}
+#user-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 10px; /* Reduced margin */
+}
+input[type="text"] {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    font-size: 1rem;
+    width: 350px;
+}
+input[type="text"]::placeholder { color: var(--text-secondary); }
+
+button {
+    background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+    color: var(--bg-color-start);
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px; /* Reduced padding */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--accent-color-1);
+}
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--accent-color-1), 0 0 35px var(--accent-color-2);
+}
+
+/* --- Column Containers --- */
+#results-container, #itinerary-container {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+#map-container {
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+.leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%); }
+
+/* --- Lists and Items --- */
+h2 {
+    text-align: left; margin-bottom: 10px; padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color); font-size: 1.2rem;
+}
+#attractions-container, #restaurants-container, #itinerary-container > .itinerary-category { 
+    overflow-y: auto; padding-right: 10px;
+}
+#attractions-container { flex: 1; min-height: 0; }
+#restaurants-container { flex: 1; min-height: 0; border-top: 2px solid var(--border-color); margin-top: 10px; padding-top: 10px; }
+#itinerary-container { padding: 15px; }
+.place, .itinerary-item {
+    background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px;
+    padding: 15px; border: 1px solid transparent; transition: border-color 0.3s ease;
+}
+.place:hover { border-color: var(--accent-color-1); }
+.place h3, .itinerary-item span { font-size: 1rem; font-weight: bold; }
+.place p, .itinerary-item p { font-size: 0.8rem; color: var(--text-secondary); }
+.add-btn { background: var(--success-color); box-shadow: 0 0 10px var(--success-color); }
+.remove-btn { background: var(--danger-color); box-shadow: 0 0 10px var(--danger-color); }
+.add-btn, .remove-btn { font-size: 0.7rem; padding: 5px 10px; font-weight: normal; }
+.more-info-btn { color: var(--accent-color-1); }
+
+/* --- Modals --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.6); }
+.modal-content { background: var(--bg-color-end); border: 1px solid var(--border-color); margin: 15% auto; padding: 20px; width: 80%; max-width: 500px; border-radius: 12px; }
+.auth-form input { background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: var(--text-color); }
+.form-toggle-link { color: var(--accent-color-1); }
+
+/* --- Weather (CHANGED FOR COMPACT VIEW) --- */
+#weather-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto 10px auto;
+    width: 100%;
+    max-width: 900px;
+}
+.weather-day {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 5px 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.weather-date-group { text-align: left; }
+.weather-day h4 { margin: 0; font-size: 0.8rem; line-height: 1.1; }
+.weather-day p { margin: 0; }
+.weather-day img { width: 40px; height: 40px; }
+.weather-day .temp { font-size: 1.3rem; font-weight: bold; color: var(--text-color); }
+.weather-date { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.1; }
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--glass-bg); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color-1); }
+
+#user-actions button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    margin-left: 10px;
+}
